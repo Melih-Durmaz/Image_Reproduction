@@ -2,6 +2,7 @@ import numpy
 from tkinter import *
 import cv2
 from PIL import ImageTk,Image
+from Image_Reproduction import Image_Reproduction
 
 class Main_Canvas(Frame):
     __canvas = None
@@ -31,10 +32,14 @@ class Main_Canvas(Frame):
         #     outline="#05f", fill="#05f")
         self.__canvas.pack(fill=BOTH, expand=1)
 
-    def draw_rectangle(self, member):
-        self.__canvas.create_rectangle(member.x, member.y, member.w, member.h,
+    def draw_rectangle(self, population, i):
+        # if i < len(population):
+        member = population[i]
+        self.__canvas.create_rectangle(member.x + 500, member.y, member.w, member.h,
                                        outline="#fb0", fill="#fb0")
-        self.__canvas.create_rectangle()
+
+
+        # self.__canvas.create_rectangle()
 
     def draw_image(self, image_filename):
         load = Image.open(image_filename)
@@ -45,13 +50,30 @@ class Main_Canvas(Frame):
         img.image = render
         img.place(x=0, y=0)
 
+    def draw_member(self):
+
+        main_canvas.draw_rectangle(population, 0)
+
+        self.__canvas.after(20, self.dr(population, i + 1))
+
 
 def main():
-    image = "images/iron.jpg"
+    image = "images/bluee.jpg"
+    population_size = 100
+    window_w = 1000
+    window_h = 600
+
     root = Tk()
-    mc = Main_Canvas(image)
-    root.geometry("1000x500+300+300")
-    mc.draw_image(image)
+    main_canvas = Main_Canvas(image)
+
+    image_reproduction = Image_Reproduction()
+    population = image_reproduction.create_population(population_size, int(window_w * 0.5), window_h)
+
+    root.geometry(f"{window_w}x{window_h}+300+300")
+
+    main_canvas.draw_image(image)
+
+    # for i in range(population.__len__()):
 
     root.mainloop()
 
