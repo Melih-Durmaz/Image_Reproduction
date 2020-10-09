@@ -18,3 +18,8 @@ class Shape:
         self.r = r
         self.g = g
         self.b = b
+
+    def get_color_in_hex_str(self):
+        color_in_hex = hex(self.r) + hex(self.g) + hex(self.b)
+        color_in_hex = f"{color_in_hex.strip('0x')}"
+        return color_in_hex
